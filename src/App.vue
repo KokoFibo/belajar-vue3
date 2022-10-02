@@ -5,7 +5,7 @@
   </pre
     >
   </div>
-  <form action="">
+  <form @submit="submitForm">
     <div class="col-4">
       <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Name</label>
@@ -55,7 +55,28 @@
         <input class="form-check-input" type="checkbox" value="Javascript" id="Javascript" v-model="formValues.skillSet" />
         <label class="form-check-label" for="Javascript">Javascript</label>
       </div>
+
+      <div>
+        <label for="exampleFormControlTextarea1" class="form-label mt-3">Years of experience:</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="0-2" value="0-2" v-model="formValues.yearsOfExperience" />
+        <label class="form-check-label" for="0-2">0-2</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="3-5" value="3-5" v-model="formValues.yearsOfExperience" />
+        <label class="form-check-label" for="3-5">3-5</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="6-10" value="6-10" v-model="formValues.yearsOfExperience" />
+        <label class="form-check-label" for="6-10">6-10</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="10+" value="10+" v-model="formValues.yearsOfExperience" />
+        <label class="form-check-label" for="10+">10+</label>
+      </div>
     </div>
+    <button class="btn btn-primary">Submit</button>
   </form>
 </template>
 
@@ -77,7 +98,12 @@
     },
     components: {},
 
-    methods: {},
+    methods: {
+      submitForm(event) {
+        event.preventDefault()
+        console.log('Form Values: ', this.formValues)
+      },
+    },
   }
 </script>
 
