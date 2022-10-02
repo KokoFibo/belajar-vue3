@@ -71,6 +71,7 @@
           jobLocation: [],
           remoteWork: 'no',
           skillSet: [],
+          yearsOfExperience: '',
         },
       }
     },
