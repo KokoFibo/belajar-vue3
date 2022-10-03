@@ -1,15 +1,20 @@
 <template>
-  <h1 class="text-primary">Computed Properties</h1>
-  <h2>Fullname - {{ firstName }} {{ lastName }}</h2>
-  <h2>Computed Fullname - {{ fullName }}</h2>
-  <button @click="changeFullname" class="btn btn-primary">Change fullname</button>
-  <div class="my-3"><input type="number" v-model.number="a" /> X <input type="number" v-model.number="b" /> = {{ c }}</div>
-  <div class="my-2">
-    <button @click="items.push({ id: 4, title: 'keyboard', price: 50 })">Add Item</button>
+  <h1 class="text-primary">Watchers</h1>
+
+  <h2>Volume Tracker (0-20)</h2>
+  <h3>Current Volume => {{ volume }}</h3>
+  <div>
+    <buttton class="btn btn-primary" @click="volume += 2">+</buttton>
+    <buttton class="btn btn-warning" @click="volume -= 2">-</buttton>
   </div>
-  <h2>Computed Total - {{ total }}</h2>
-  <h2>Method Total - {{ getTotal() }}</h2>
-  <input type="text" v-model="country" />
+  <div>
+    <input type="text" v-model="movie" />
+    <input type="text" v-model="movieInfo.title" />
+    <input type="text" v-model="movieInfo.actor" />
+  </div>
+  <div>
+    <button class="btn btn-primary" @click="movieList.push('Wonder Woman')">Add Movie</button>
+  </div>
 </template>
 
 <script>
@@ -17,59 +22,43 @@
     name: 'App',
     data() {
       return {
-        firstName: 'Bruce',
-        lastName: 'Wayne',
-        a: null,
-        b: null,
-        items: [
-          {
-            id: 1,
-            title: 'TV',
-            price: 100,
-          },
-          {
-            id: 2,
-            title: 'Phone',
-            price: 200,
-          },
-          {
-            id: 3,
-            title: 'Laptop',
-            price: 300,
-          },
-        ],
-        country: '',
+        volume: 0,
+        movie: 'Batman',
+        movieInfo: {
+          title: '',
+          actor: '',
+        },
+        movieList: ['Batman', 'Superman'],
       }
     },
-    methods: {
-      getTotal() {
-        console.log('getTotal Method')
-        return this.items.reduce((total, curr) => (total += curr.price), 0)
+
+    methods: {},
+
+    computed: {},
+
+    watch: {
+      volume(newValue1, oldValue) {
+        if (newValue1 > oldValue && newValue1 === 16) {
+          alert('Listening to a high volume for a long time may damage your hearing')
+        }
       },
-      changeFullname() {
-        this.fullName = 'Clark Kent'
-      },
-    },
-    computed: {
-      fullName: {
-        get() {
-          return `${this.firstName} ${this.lastName}`
+      movie: {
+        handler(newValue) {
+          console.log(`Calling API with new movie name = ${newValue}`)
         },
-
-        set(value) {
-          const names = value.split(' ')
-          this.firstName = names[0]
-          this.lastName = names[1]
+        immediate: true,
+      },
+      movieInfo: {
+        handler(newValue) {
+          console.log(`Calling API with new movie title = ${newValue.title} and actor = ${newValue.actor} `)
         },
+        deep: true,
       },
-
-      c() {
-        return this.a * this.b
-      },
-
-      total() {
-        console.log('Total computed property')
-        return this.items.reduce((total, curr) => (total += curr.price), 0)
+      movieList: {
+        handler(newValue) {
+          console.log(`Updated list ${newValue}`)
+        },
+        deep: true,
       },
     },
   }
@@ -84,5 +73,8 @@
     color: #2c3e50;
     margin-top: 60px;
     margin-left: 20px;
+  }
+  div {
+    margin: 1rem 0;
   }
 </style>
